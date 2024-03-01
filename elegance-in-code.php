@@ -13,6 +13,7 @@ function ec_plugin_enqueue_script() {
     wp_enqueue_script('jquery');
 
     wp_enqueue_script('ec-plugin-script', plugins_url('js/ec-script.js', __FILE__), array('jquery'), '1.0', true);
+    wp_enqueue_style('ec-plugin-style', plugins_url('css/ec-style.css', __FILE__));
 }
 add_action('wp_enqueue_scripts', 'ec_plugin_enqueue_script');
 
