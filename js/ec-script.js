@@ -1,4 +1,5 @@
 (function($) {
+    // Service amount change
     $(document).ready(function() {
         var planAmount = 0;
         $('#plan').on('change', function(){
@@ -15,10 +16,21 @@
         });
 
         $('input[name="quantity"]').on('change', function(){
-            $(document).ready(function() {                
+            $(document).ready(function() {           
+                
+                function addCommasToPrice(price) {    
+                    var parts = price.toFixed(2).toString().split('.');
+                    var integerPart = parts[0];
+                    var decimalPart = parts[1];
+
+                    var formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+                    return formattedIntegerPart + '.' + decimalPart.padEnd(2, '0');
+                }
+                
                 var quantity = $('input[name="quantity"]').val();
                 var total = planAmount * quantity;
-                total = total.toFixed(2);
+                total = addCommasToPrice(total);
 
                 var newHtml = `<bdi><span class="woocommerce-Price-currencySymbol">$</span>${total}</bdi>`;
 
@@ -27,8 +39,26 @@
         });
     });
 
-    $(document).on('DOMSubtreeModified', '#order_review', function() {
-        $('#coupon_code').val('');
+    // Coupon code empty fix
+    var targetNode = document.querySelector('#order_review');
+    var observer = new MutationObserver(function(mutationsList, observer) {
+        for(var mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+                handleDOMChanges();
+            }
+        }
     });
+
+    var config = { childList: true, subtree: true };
+    observer.observe(targetNode, config);
+
+    function handleDOMChanges() {
+        $('#coupon_code').val('');
+    }
+
 })(jQuery);
+
+
+
+
 
