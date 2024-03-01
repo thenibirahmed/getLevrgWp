@@ -15,7 +15,7 @@
             });
         });
 
-        $('input[name="quantity"]').on('change', function(){
+        function changeAmountByQuantity(){
             $(document).ready(function() {           
                 
                 function addCommasToPrice(price) {    
@@ -36,26 +36,36 @@
 
                 $(".woocommerce-Price-amount").html(newHtml);
             });
+        }
+
+        $('input[name="quantity"]').on('change', function(){
+            changeAmountByQuantity()
+        });
+
+        $('input[name="quantity"]').keyup(function(){
+            changeAmountByQuantity()
         });
     });
 
     // Coupon code empty fix
     var targetNode = document.querySelector('#order_review');
-    var observer = new MutationObserver(function(mutationsList, observer) {
-        for(var mutation of mutationsList) {
-            if (mutation.type === 'childList') {
-                handleDOMChanges();
+
+    if (targetNode) {
+        var observer = new MutationObserver(function(mutationsList, observer) {
+            for(var mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    handleDOMChanges();
+                }
             }
+        });
+    
+        var config = { childList: true, subtree: true };
+        observer.observe(targetNode, config);
+    
+        function handleDOMChanges() {
+            $('#coupon_code').val('');
         }
-    });
-
-    var config = { childList: true, subtree: true };
-    observer.observe(targetNode, config);
-
-    function handleDOMChanges() {
-        $('#coupon_code').val('');
     }
-
 })(jQuery);
 
 
