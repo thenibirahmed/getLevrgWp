@@ -1,15 +1,5 @@
 (function($) {
     $(document).ready(function() {
-        // $('button[name="apply_coupon"]').click(function() {
-        //     $('#coupon_code').val('');
-        // });
-
-        // $('#coupon_code').keydown(function(e) {
-        //     if (e.keyCode === 13) {
-        //         $(this).val('');
-        //     }
-        // });
-        
         var planAmount = 0;
         $('#plan').on('change', function(){
             $(document).ready(function() {
@@ -36,4 +26,9 @@
             });
         });
     });
+
+    $(document).on('DOMSubtreeModified', '#order_review', function() {
+        $('#coupon_code').val('');
+    });
 })(jQuery);
+
