@@ -45,6 +45,28 @@
         $('input[name="quantity"]').keyup(function(){
             changeAmountByQuantity()
         });
+
+        $('.shopengine-cart-table').on('change', 'input.qty', function(){
+            ecUpdateCartTotals();
+        });
+    
+        $(document).on('click', '.shopengine-cart-table .minus-button', function(){
+            ecUpdateCartTotals();
+        });
+        
+        $(document).on('click', '.shopengine-cart-table .plus-button', function(){
+            ecUpdateCartTotals();
+        });        
+    
+        function ecUpdateCartTotals(){
+            let timeout;
+            if ( timeout !== undefined ) {
+                clearTimeout( timeout );
+            }
+            timeout = setTimeout(function() {
+                $("[name='update_cart']").trigger("click"); 
+            }, 500 );
+        }
     });
 
     // Coupon code empty fix

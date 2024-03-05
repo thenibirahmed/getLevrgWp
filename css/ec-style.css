@@ -1,3 +1,8 @@
 .wps_wsp_recurring_total{
 	display: inline-flex!important;
 }
+/* 
+button[name="update_cart"],
+input[name="update_cart"] {
+	display: none!important;
+} */
